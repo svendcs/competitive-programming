@@ -9,7 +9,7 @@
 #endif
 
 int main() {
-    // this solution gets timelimit exceeded, but the idea is the same.
+    // Using print and scanf is neccesary to avoid timeout
     // find prime numbers using sieve of erathothenes
     int factors[MAX+1] = {};
 
@@ -37,7 +37,7 @@ int main() {
     for(int i = 0; i < t; ++i) {
         int a, b;
         scanf("%d %d", &a, &b);
-        std::cout << factors[a] - factors[b] << std::endl;
+        printf("%d\n", factors[a] - factors[b]);
     }
     return 0;
 }
