@@ -1,20 +1,24 @@
 #include <iostream>
 
+int lcp(std::string a, std::string b) {
+    int i = 0;
+    for(; i < a.size() && i < b.size() && a[i] == b[i]; ++i);
+    return i;
+}
+
+int lcs(std::string a, std::string b) {
+    int i = 0;
+    for(; i < a.size() && i < b.size() && a[a.size() - 1 - i] == b[b.size() - 1 - i]; ++i);
+    return i;
+}
+
 bool possible(std::string banner) {
     std::string codeforces = "CODEFORCES";
-    // we can either cut from left, right or in the middle
-    if(banner.size() < codeforces.size())
-        return false;
-    if(banner.substr(0, codeforces.size()) == codeforces) // from the left
-        return true;
-    if(banner.substr(banner.size() - codeforces.size(), codeforces.size()) == codeforces) // from the right
-        return true;
 
-    // in the middle
-    int j = 0;
-    for(int i = 0; i < banner.size() && banner[i] == codeforces[j]; ++i, ++j);
-    int len = codeforces.size() - j;
-    return banner.substr(banner.size() - len, len) == codeforces.substr(j);
+    int a = lcp(banner, codeforces);
+    int b = lcs(banner, codeforces);
+
+    return a + b >= codeforces.size();
 }
 
 int main() {
