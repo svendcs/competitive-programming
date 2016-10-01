@@ -1,0 +1,55 @@
+safe = list(map(int, input().split()))
+safe.extend(list(map(int, input().split())))
+safe.extend(list(map(int, input().split())))
+
+def is_open(safe, presses):
+    copy = list(safe)
+    for y in range(0, 3):
+        for x in range(0, 3):
+            if presses[y * 3 + x] == 0: 
+                continue
+
+            # print("Pressing ({}, {})".format(x,y))
+            for i in range(0,3):
+                if i != x:
+                    copy[y * 3 + i] = (copy[y * 3 + i] + presses[y * 3 + x]) % 4
+                if i != y:
+                    copy[i * 3 + x] = (copy[i * 3 + x] + presses[y*3+x]) % 4
+            copy[y * 3 + x] = (copy[y * 3 + x] + presses[y*3+x]) % 4
+
+
+            # print(copy)
+
+    for y in copy:
+        if y != 0:
+            return False
+    return True
+
+# Try all 3^9 possibilities
+presses = [0,0,0,0,0,0,0,0,0]
+
+# print(safe)
+# print(is_open(safe, [1, 0, 0, 0, 2, 1, 0, 0, 0]))
+
+inf = 2000000
+best = inf
+while True:
+    if is_open(safe, presses):
+        best = min(best, sum(presses))
+
+    done = False
+    for i in range(len(presses) + 1):
+        if i == len(presses):
+            done = True
+            break
+
+        presses[i] += 1
+        if presses[i] > 3:
+            presses[i] = 0
+        else:
+            break
+
+    if done: break
+
+print(best if best != inf else "-1")
+
