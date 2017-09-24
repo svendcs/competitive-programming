@@ -13,6 +13,8 @@ struct Employee {
     bool visited;
 
     bool operator<(const Employee & other) const {
+        if (height != other.height) return height < other.height;
+
         return salary < other.salary;
     }
 };
@@ -44,12 +46,12 @@ int main() {
         employees.push_back(e);
     }
 
-    std::sort(employees.begin(), employees.end(), [](const Employee & a, const Employee & b) { return a.height < b.height;});
+    std::sort(employees.begin(), employees.end());
 
     std::map<int, int> temp;
     for (size_t i = 0; i < m; ++i) {
         size_t j = m-1-i;
-        auto it = temp.upper_bound(employees[j].salary);
+        auto it = temp.lower_bound(employees[j].salary);
         if (it == temp.end())
             employees[j].boss = -1;
         else {
