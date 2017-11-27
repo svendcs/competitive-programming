@@ -47,11 +47,11 @@ class Circle:
     def area(self):
         return math.pi * self.r**2
 
-    # area of circle sector with angle phi
+    # area of circle sector with angle phi (slice of a circle)
     def sector_area(self, phi):
         return self.r**2 * phi / 2
 
-    # area of segment(triangle) with angle phi
+    # area of segment with angle phi (part of circle cut of by line)
     def segment_area(self, phi):
         return (self.r**2 / 2) * (phi - math.sin(phi))
 
@@ -63,7 +63,7 @@ def area(r, t):
         return c.area() / 2
     else:
         phi = 2*math.acos(t/r)
-        return c.area() - (c.sector_area(phi) + c.segment_area(phi))
+        return c.area() - c.segment_area(phi)
 
 a = int(input())
 
